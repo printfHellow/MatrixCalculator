@@ -4,6 +4,11 @@ import java.util.Scanner;
 public class MatrixCalculator {
 
     public static void main(String[] args) {
+        MatrixCalculator calculator = new MatrixCalculator();
+        calculator.start();
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             displayMenu();
@@ -19,61 +24,57 @@ public class MatrixCalculator {
                     performMultiplication(scanner);
                     break;
                 case 4:
-                    System.out.println("Exiting program.");
+                    System.out.println("Thoát chương trình.");
                     scanner.close();
                     System.exit(0);
                 default:
-                    System.out.println("Invalid option. Please try again.");
+                    System.out.println("Lựa chọn không hợp lệ. Vui lòng thử lại.");
             }
         }
     }
 
     public static void displayMenu() {
-        System.out.println("Select an option:");
-        System.out.println("1. Add matrices");
-        System.out.println("2. Subtract matrices");
-        System.out.println("3. Multiply matrices");
-        System.out.println("4. Exit");
-        System.out.println("Your choice: ");
+        System.out.println("Chọn một tùy chọn:");
+        System.out.println("1. Cộng ma trận");
+        System.out.println("2. Trừ ma trận");
+        System.out.println("3. Nhân ma trận");
+        System.out.println("4. Thoát");
+        System.out.print("Lựa chọn của bạn: ");
     }
 
-    public static void performAddition(Scanner scanner) {
+    public void performAddition(Scanner scanner) {
         int[][] matrix1 = getMatrixInput(scanner, "1");
         int[][] matrix2 = getMatrixInput(scanner, "2");
         if (matrix1.length == matrix2.length && matrix1[0].length == matrix2[0].length) {
             int[][] result = additionMatrix(matrix1, matrix2);
-            System.out.println("Result of addition:");
+            System.out.println("Kết quả của phép cộng:");
             displayMatrix(result);
         } else {
-            System.out.println("Matrices must have the same dimensions for addition.");
+            System.out.println("Ma trận phải có cùng kích thước để thực hiện phép cộng.");
         }
     }
 
-    public static void performSubtraction(Scanner scanner) {
+    public void performSubtraction(Scanner scanner) {
         int[][] matrix1 = getMatrixInput(scanner, "1");
         int[][] matrix2 = getMatrixInput(scanner, "2");
         if (matrix1.length == matrix2.length && matrix1[0].length == matrix2[0].length) {
             int[][] result = subtractionMatrix(matrix1, matrix2);
-            System.out.println("Result of subtraction:");
-            displayMatrix(matrix1);
-            System.out.println("-");
-            displayMatrix(matrix2);
-            System.out.println("=");
+            System.out.println("Kết quả của phép trừ:");
             displayMatrix(result);
         } else {
-            System.out.println("Matrices must have the same dimensions for subtraction.");
+            System.out.println("Ma trận phải có cùng kích thước để thực hiện phép trừ.");
         }
     }
 
-    public static void performMultiplication(Scanner scanner) {
+    public void performMultiplication(Scanner scanner) {
         int[][] matrix1 = getMatrixInput(scanner, "1");
         int[][] matrix2 = getMatrixInput(scanner, "2");
         if (matrix1[0].length == matrix2.length) {
             int[][] result = multiplicationMatrix(matrix1, matrix2);
-            System.out.println("Result of multiplication:");
+            System.out.println("Kết quả của phép nhân:");
             displayMatrix(result);
         } else {
-            System.out.println("Number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+            System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
         }
     }
 
@@ -82,20 +83,20 @@ public class MatrixCalculator {
             try {
                 return Integer.parseInt(scanner.next());
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Đầu vào không hợp lệ. Vui lòng nhập một số.");
             }
         }
     }
 
     public static int[][] getMatrixInput(Scanner scanner, String matrixOrder) {
-        System.out.print("Enter Row Matrix " + matrixOrder + ":");
+        System.out.print("Nhập số hàng cho Ma trận " + matrixOrder + ": ");
         int rows = getIntInput(scanner);
-        System.out.print("Enter Rolumn Matrix " + matrixOrder + ":");
+        System.out.print("Nhập số cột cho Ma trận " + matrixOrder + ": ");
         int columns = getIntInput(scanner);
         int[][] matrix = new int[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.printf("Enter Matrix[%d][%d]: ", i+1, j+1);
+                System.out.printf("Nhập Ma trận[%d][%d]: ", i + 1, j + 1);
                 matrix[i][j] = getIntInput(scanner);
             }
         }
