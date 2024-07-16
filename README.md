@@ -24,6 +24,11 @@ public class MatrixCalculator {
                     performMultiplication(scanner);
                     break;
                 case 4:
+                case 4:
+                    performPowerMinusOne(scanner);
+                    break;
+                    
+                case 5:
                     System.out.println("Thoát chương trình.");
                     scanner.close();
                     System.exit(0);
@@ -76,6 +81,15 @@ public class MatrixCalculator {
         } else {
             System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
         }
+    }
+     public void performPowerMinusOne(Scanner scanner) {
+        int[][] matrix = getMatrixInput(scanner, "");
+        System.out.print("Nhập số mũ: ");
+        int exponent = getIntInput(scanner);
+        int[][] powerMatrix = powerMatrix(matrix, exponent);
+        int[][] result = subtractOneFromMatrix(powerMatrix);
+        System.out.println("Kết quả của ma trận mũ trừ 1:");
+        displayMatrix(result);
     }
 
     public static int getIntInput(Scanner scanner) {
@@ -146,6 +160,40 @@ public class MatrixCalculator {
                 for (int k = 0; k < columns1; k++) {
                     result[i][j] += matrix1[i][k] * matrix2[k][j];
                 }
+            }
+        }
+        return result;
+    }
+     public static int[][] powerMatrix(int[][] matrix, int exponent) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int[][] result = new int[rows][columns];
+        
+        // Initialize result as identity matrix
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result[i][j] = (i == j) ? 1 : 0;
+            }
+        }
+
+        int[][] base = matrix;
+        while (exponent > 0) {
+            if (exponent % 2 == 1) {
+                result = multiplicationMatrix(result, base);
+            }
+            base = multiplicationMatrix(base, base);
+            exponent /= 2;
+        }
+        return result;
+    }
+
+    public static int[][] subtractOneFromMatrix(int[][] matrix) {
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        int[][] result = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                result[i][j] = matrix[i][j] - 1;
             }
         }
         return result;
