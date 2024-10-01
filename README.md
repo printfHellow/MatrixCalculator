@@ -61,24 +61,24 @@ public class P0074 {
         displayMatrix(result);
     }
 
-    public void performMultiplication(Scanner scanner) {
-        double[][] matrix1 = getMatrixInput(scanner, "1");
-        System.out.print("Nhập số hàng cho Ma trận 2: ");
-        int rows2 = getPositiveIntInput(scanner);
-        System.out.print("Nhập số cột cho Ma trận 2: ");
-        int columns2 = getPositiveIntInput(scanner);
-        
-        if (matrix1[0].length != rows2) {
-            System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
-            return;
-        }
-
-        double[][] matrix2 = getMatrixInput(scanner, "2", rows2, columns2, "nhân");
-        if (matrix2 == null) return; // Nếu không có ma trận 2, quay lại menu
-        double[][] result = multiplicationMatrix(matrix1, matrix2);
-        System.out.println("Kết quả của phép nhân:");
-        displayMatrix(result);
+   public void performMultiplication(Scanner scanner) {
+    double[][] matrix1 = getMatrixInput(scanner, "1");
+    System.out.print("Nhập số hàng cho Ma trận 2: ");
+    int rows2 = getPositiveIntInput(scanner);
+    System.out.print("Nhập số cột cho Ma trận 2: ");
+    int columns2 = getPositiveIntInput(scanner);
+    
+    if (matrix1[0].length != rows2) {
+        System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
+        return;
     }
+
+    // Sử dụng hàm mới để nhập ma trận 2 với kích thước đã xác định
+    double[][] matrix2 = inputMatrix(scanner, rows2, columns2, "2");
+    double[][] result = multiplicationMatrix(matrix1, matrix2);
+    System.out.println("Kết quả của phép nhân:");
+    displayMatrix(result);
+}
 
     public static int getIntInput(Scanner scanner) {
         while (true) {
@@ -124,15 +124,15 @@ public class P0074 {
     }
 
     public static double[][] inputMatrix(Scanner scanner, int rows, int columns, String matrixOrder) {
-        double[][] matrix = new double[rows][columns];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                System.out.printf("Nhập Ma trận[%d][%d]: ", i + 1, j + 1);
-                matrix[i][j] = getDoubleInput(scanner);
-            }
+    double[][] matrix = new double[rows][columns];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            System.out.printf("Nhập Ma trận[%d][%d]: ", i + 1, j + 1);
+            matrix[i][j] = getDoubleInput(scanner);
         }
-        return matrix;
     }
+    return matrix;
+}
 
     public static double getDoubleInput(Scanner scanner) {
         while (true) {
