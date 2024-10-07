@@ -60,25 +60,28 @@ public class P0074 {
         System.out.println("Kết quả của phép trừ:");
         displayMatrix(result);
     }
-
-   public void performMultiplication(Scanner scanner) {
-    double[][] matrix1 = getMatrixInput(scanner, "1");
-    System.out.print("Nhập số hàng cho Ma trận 2: ");
-    int rows2 = getPositiveIntInput(scanner);
-    System.out.print("Nhập số cột cho Ma trận 2: ");
-    int columns2 = getPositiveIntInput(scanner);
     
-    if (matrix1[0].length != rows2) {
-        System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
-        return;
-    }
+    //đã chỉnh sửa
+    public void performMultiplication(Scanner scanner) {
+        double[][] matrix1 = getMatrixInput(scanner, "1");
+        while (true) {
+            System.out.print("Nhập số hàng cho Ma trận 2: ");
+            int rows2 = getPositiveIntInput(scanner);
+            System.out.print("Nhập số cột cho Ma trận 2: ");
+            int columns2 = getPositiveIntInput(scanner);
 
-    // Sử dụng hàm mới để nhập ma trận 2 với kích thước đã xác định
-    double[][] matrix2 = inputMatrix(scanner, rows2, columns2, "2");
-    double[][] result = multiplicationMatrix(matrix1, matrix2);
-    System.out.println("Kết quả của phép nhân:");
-    displayMatrix(result);
-}
+            if (matrix1[0].length == rows2) {
+                // Sử dụng hàm mới để nhập ma trận 2 với kích thước đã xác định
+                double[][] matrix2 = inputMatrix(scanner, rows2, columns2, "2");
+                double[][] result = multiplicationMatrix(matrix1, matrix2);
+                System.out.println("Kết quả của phép nhân:");
+                displayMatrix(result);
+            }
+
+            System.out.println("Số cột của ma trận đầu tiên phải bằng số hàng của ma trận thứ hai.");
+        }
+
+    }
 
     public static int getIntInput(Scanner scanner) {
         while (true) {
@@ -108,20 +111,23 @@ public class P0074 {
         int columns = getPositiveIntInput(scanner);
         return inputMatrix(scanner, rows, columns, matrixOrder);
     }
-
+    
+//đã chỉnh sửa
     public static double[][] getMatrixInput(Scanner scanner, String matrixOrder, int expectedRows, int expectedColumns, String operation) {
+    while (true) {
         System.out.println("Nhập số hàng cho Ma trận " + matrixOrder + ": ");
         int rows = getPositiveIntInput(scanner);
         System.out.println("Nhập số cột cho Ma trận " + matrixOrder + ": ");
         int columns = getPositiveIntInput(scanner);
 
-        if (rows != expectedRows || columns != expectedColumns) {
-            System.out.printf("Ma trận phải có kích thước %dx%d để thực hiện phép %s.\n", expectedRows, expectedColumns, operation);
-            return null; // Nếu không thỏa mãn điều kiện, trả về null
+        if (rows == expectedRows && columns == expectedColumns) {
+            return inputMatrix(scanner, rows, columns, matrixOrder);
+        } else {
+            System.out.printf("Ma trận phải có kích thước %dx%d để thực hiện phép %s. Vui lòng nhập lại.\n", expectedRows, expectedColumns, operation);
         }
-
-        return inputMatrix(scanner, rows, columns, matrixOrder);
     }
+}
+
 
     public static double[][] inputMatrix(Scanner scanner, int rows, int columns, String matrixOrder) {
     double[][] matrix = new double[rows][columns];
